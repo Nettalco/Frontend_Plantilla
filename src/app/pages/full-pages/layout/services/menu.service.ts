@@ -127,8 +127,24 @@ export class MenuService implements OnDestroy {
    * NOTA: Solo estructura (secciones/subsecciones), NO incluye permisos
    */
   getMenuItems(): Observable<MenuResponse> {
-    return this.http.get<MenuResponse>(this.url + 'api/permisos/navegacion')
-      .pipe(catchError(this.handleTokenError));
+    const url = this.url + 'api/permisos/navegacion';
+    console.log('🔍 Obteniendo menú de navegación desde:', url);
+    
+    return this.http.get<MenuResponse>(url, {
+      withCredentials: true // Importante para enviar cookies en requests cross-origin
+    }).pipe(
+      catchError((error: any) => {
+        console.error('❌ Error al obtener menú de navegación:', error);
+        console.error('📊 Detalles del error:', {
+          status: error.status,
+          statusText: error.statusText,
+          message: error.message,
+          url: error.url,
+          error: error.error
+        });
+        return this.handleTokenError(error);
+      })
+    );
   }
   /**
    * Obtiene la estructura del menú desde el servidor con cache optimizado
@@ -248,9 +264,24 @@ export class MenuService implements OnDestroy {
   // ========== MÉTODOS PRIVADOS =========
 
   private handleTokenError = (error: any) => {
+    // Manejar errores de token expirado
     if (error.status === 419 && error.error?.error === 'TOKEN_EXPIRED') {
+      console.warn('⚠️ Token expirado');
       return throwError(() => error);
     }
+    
+    // Manejar errores 500 del servidor
+    if (error.status === 500) {
+      console.error('❌ Error 500 del servidor al obtener menú de navegación');
+      const errorMessage = error.error?.message || error.message || 'Error interno del servidor';
+      this.messageService.error(errorMessage, 'Error al cargar el menú');
+    }
+    
+    // Manejar errores de autenticación
+    if (error.status === 401 || error.status === 403) {
+      console.warn('⚠️ Error de autenticación/autorización');
+    }
+    
     return this.httpUtils.handleError(error);
   }
 

@@ -96,6 +96,14 @@ export class SidebarItemComponent implements OnInit, OnDestroy {
       event.stopPropagation();
     }
 
+    // Si el sidebar está colapsado, no expandir submenús, solo navegar si tiene ruta
+    if (this.sidebarCollapsed) {
+      if (this.item.routerLink) {
+        this.handleNavigation();
+      }
+      return;
+    }
+
     if (this.item.items && this.item.items.length > 0) {
       // Solo emitir expand/collapse si tiene hijos
       this.expandChange.emit({ depth: this.depth, index: index });
