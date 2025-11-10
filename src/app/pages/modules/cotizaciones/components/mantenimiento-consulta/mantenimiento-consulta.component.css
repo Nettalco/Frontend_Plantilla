@@ -1,0 +1,130 @@
+/* ===================== Helpers de alineación ===================== */
+.cell-center {
+  text-align: center;
+}
+.cell-right {
+  text-align: right;
+}
+.cell-estado-cotizacion {
+  text-align: left;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+/* ===================== Estilos de tabla y columnas ===================== */
+/* Anchos compactos para mejor visualización */
+::ng-deep .tabla-datos th:nth-child(1) { width: 70px !important; } /* Id. Cotización */
+
+/* Estado Cotización: header visible, celdas truncadas */
+::ng-deep .tabla-datos th:nth-child(2) {
+  width: 90px !important;
+  text-align: center !important;
+}
+::ng-deep .tabla-datos td:nth-child(2) {
+  max-width: 90px !important;
+  width: 90px !important;
+  overflow: hidden !important;
+  white-space: nowrap !important;
+  text-overflow: ellipsis !important;
+  text-align: left !important;
+  vertical-align: middle !important;
+  padding: 0.25rem 0.15rem !important;
+}
+
+::ng-deep .tabla-datos th:nth-child(3) { width: 90px !important; } /* Cliente */
+::ng-deep .tabla-datos th:nth-child(4) { width: 90px !important; } /* Estilo Cliente */
+::ng-deep .tabla-datos th:nth-child(5) { width: 80px !important; } /* Versión Cliente */
+::ng-deep .tabla-datos th:nth-child(6) { width: 90px !important; } /* Estilo Nettalco */
+::ng-deep .tabla-datos th:nth-child(7) { width: 80px !important; } /* Versión Nettalco */
+::ng-deep .tabla-datos th:nth-child(8) { width: 80px !important; } /* Temporada */
+::ng-deep .tabla-datos th:nth-child(9) { width: 80px !important; } /* ID Tela */
+
+/* Descripción de Tela: header visible, celdas truncadas */
+::ng-deep .tabla-datos th:nth-child(10) {
+  width: 120px !important;
+  text-align: center !important;
+}
+::ng-deep .tabla-datos td:nth-child(10) {
+  max-width: 120px !important;
+  width: 120px !important;
+  overflow: hidden !important;
+  white-space: nowrap !important;
+  text-overflow: ellipsis !important;
+  text-align: left !important;
+  vertical-align: middle !important;
+  padding: 0.25rem 0.15rem !important;
+}
+
+::ng-deep .tabla-datos th:nth-child(11) { width: 100px !important; } /* Prendas Proyectadas */
+::ng-deep .tabla-datos th:nth-child(12) { width: 100px !important; } /* Fecha de Creación */
+::ng-deep .tabla-datos th:nth-child(13) { width: 100px !important; } /* Fecha Calculo */
+::ng-deep .tabla-datos th:nth-child(14) { width: 100px !important; } /* Costo Ponderado */
+::ng-deep .tabla-datos th:nth-child(15) { width: 100px !important; } /* Precio Cotización */
+::ng-deep .tabla-datos th:nth-child(16) { width: 80px !important; } /* MARKUP */
+
+/* ===================== Estilos generales de tabla ===================== */
+::ng-deep .tabla-datos {
+  font-size: 12px !important;
+}
+
+::ng-deep .tabla-datos th {
+  font-size: 11px !important;
+  font-weight: 600 !important;
+  padding: 0.25rem 0.15rem !important;
+}
+
+::ng-deep .tabla-datos td {
+  font-size: 11px !important;
+  vertical-align: middle !important;
+  padding: 0.25rem 0.15rem !important;
+}
+
+/* ===================== Filtros de columna ===================== */
+.filtro-columna-input {
+  width: 100% !important;
+  max-width: 100% !important;
+  min-width: 0 !important;
+  box-sizing: border-box !important;
+  font-size: 9pt !important;
+  padding: 4px 6px !important;
+  height: 28px !important;
+  border: 1px solid #ddd !important;
+  border-radius: 3px !important;
+}
+
+.filtro th div {
+  overflow: hidden !important;
+  padding: 3px !important;
+}
+
+/* ===================== Estilos del Tour ===================== */
+/* Asegurar que los elementos del tour sean visibles y accesibles */
+::ng-deep .driver-popover {
+  z-index: 10000 !important;
+}
+
+::ng-deep .driver-overlay {
+  z-index: 9999 !important;
+}
+
+/* Estilos para los botones del tour */
+::ng-deep .driver-popover .driver-popover-footer {
+  display: flex !important;
+  justify-content: space-between !important;
+  align-items: center !important;
+  gap: 8px !important;
+}
+
+::ng-deep .driver-popover .driver-popover-close-btn,
+::ng-deep .driver-popover .driver-popover-next-btn,
+::ng-deep .driver-popover .driver-popover-prev-btn {
+  cursor: pointer !important;
+  transition: all 0.2s ease !important;
+  border: none !important;
+  border-radius: 4px !important;
+  padding: 8px 16px !important;
+  font-size: 14px !important;
+  font-weight: 500 !important;
+}
+

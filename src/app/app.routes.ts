@@ -14,16 +14,17 @@ export const routes: Routes = [
         pathMatch: 'full'
       },
       {
-        path: 'inicio',
-        loadComponent: () => import('./pages/inicio/inicio.component').then(m => m.InicioComponent),
-        data: { breadcrumb: 'Inicio' }
+        path: 'estilos',
+        loadChildren: () => import('./pages/modules/estilos/estilos.routes').then(m => m.estilosRoutes)
+      },
+      {
+        path: 'cotizaciones',
+        loadChildren: () => import('./pages/modules/cotizaciones/cotizaciones.routes').then(m => m.cotizacionesRoutes)
+      },
+      {
+        path: 'herramientas',
+        loadChildren: () => import('./pages/modules/herramientas/herramientas.routes').then(m => m.herramientasRoutes)
       }
-      // Aquí puedes agregar más rutas hijas
-      // {
-      //   path: 'cotizaciones',
-      //   loadComponent: () => import('./pages/cotizaciones/cotizaciones.component').then(m => m.CotizacionesComponent),
-      //   data: { breadcrumb: 'Cotizaciones' }
-      // }
     ]
   },
   {
