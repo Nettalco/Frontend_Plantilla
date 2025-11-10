@@ -1,0 +1,22 @@
+<div class="layout-container">
+  <div class="layout-body">
+    <!-- Sidebar -->
+    <app-sidebar [open]="sidebarOpen" />
+
+    <!-- Main Content Area -->
+    <div class="main-content-wrapper d-flex flex-column flex-grow-1">
+      <!-- Header en el Main Content Area -->
+      <app-header
+        [sidebarOpen]="sidebarOpen"
+        (toggleSidebar)="onToggleSidebar()" />
+
+      <!-- Main Content - RouterOutlet para las rutas hijas -->
+      <div class="layout-main-content">
+        <router-outlet></router-outlet>
+      </div>
+
+      <!-- Footer en el Main Content Area -->
+      <app-footer />
+    </div>
+  </div>
+</div>

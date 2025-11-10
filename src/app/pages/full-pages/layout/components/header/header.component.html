@@ -1,0 +1,49 @@
+<p-toolbar styleClass="custom-toolbar">
+  <ng-template pTemplate="left">
+    <div class="d-flex flex-column gap-2">
+      <div class="d-flex align-items-center gap-3">
+        <p-button
+          icon="pi pi-bars"
+          [text]="true"
+          (onClick)="onToggleSidebar()"
+          [style]="{'color': getTextColor()}"
+          pTooltip="Alternar menú"
+          tooltipPosition="bottom" />
+        <!-- Breadcrumb dentro del header -->
+        <div class="header-breadcrumb">
+          <app-breadcrumbs />
+        </div>
+      </div>
+    </div>
+  </ng-template>
+  <ng-template pTemplate="right">
+    <div class="d-flex align-items-center gap-2">
+      <!-- Botón para alternar modo oscuro/claro -->
+      <p-button
+        [icon]="isDarkMode ? 'pi pi-sun' : 'pi pi-moon'"
+        [text]="true"
+        [rounded]="true"
+        (onClick)="toggleDarkMode()"
+        [style]="{'color': getTextColor()}"
+        [pTooltip]="isDarkMode ? 'Cambiar a modo claro' : 'Cambiar a modo oscuro'"
+        tooltipPosition="bottom" />
+
+      <p-menu #userMenu [model]="menuItems" [popup]="true" />
+      <p-button
+        type="button"
+        [text]="true"
+        [rounded]="true"
+        (onClick)="userMenu.toggle($event)"
+        [style]="{'color': getTextColor()}"
+        class="d-flex align-items-center gap-2">
+        <p-avatar
+          [label]="getUserInitials()"
+          shape="circle"
+          [style]="{'background-color': 'var(--p-highlight-background)', 'color': '#fff', 'width': '2rem', 'height': '2rem'}" />
+        <span class="d-none d-md-inline" [style]="{'color': getTextColor()}">{{ getUserName() }}</span>
+        <i class="pi pi-chevron-down" [style]="{'color': getTextColor()}"></i>
+      </p-button>
+    </div>
+  </ng-template>
+</p-toolbar>
+

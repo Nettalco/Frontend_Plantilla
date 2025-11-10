@@ -1,0 +1,128 @@
+
+::ng-deep .custom-toolbar {
+  background: linear-gradient(
+    90deg,
+    var(--p-primary-500) 0%,
+    var(--p-highlight-background) 100%
+  ) !important;
+  border-radius: 0 !important;
+  padding: 0.75rem 1.5rem !important;
+  box-shadow: 0 2px 8px rgba(28, 34, 77, 0.15) !important;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1) !important;
+}
+
+/* Modo oscuro - Header con fondo claro */
+html.app-dark ::ng-deep .custom-toolbar {
+  background: linear-gradient(
+    90deg,
+    #f7fafc 0%,
+    #edf2f7 100%
+  ) !important;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.1) !important;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1) !important;
+  color: #1c224d !important;
+}
+
+/* Modo oscuro - Todos los elementos dentro del toolbar con color oscuro */
+html.app-dark ::ng-deep .custom-toolbar * {
+  color: #1c224d !important;
+}
+
+html.app-dark ::ng-deep .custom-toolbar span,
+html.app-dark ::ng-deep .custom-toolbar .p-button-label {
+  color: #1c224d !important;
+}
+
+::ng-deep .custom-toolbar .p-toolbar-group-left,
+::ng-deep .custom-toolbar .p-toolbar-group-right {
+  display: flex;
+  align-items: center;
+}
+
+/* Breadcrumb dentro del header */
+.header-breadcrumb {
+  padding: 0;
+  margin-top: 0.1rem;
+}
+
+.header-breadcrumb ::ng-deep .custom-breadcrumb {
+  background: transparent !important;
+  border: none !important;
+  padding: 0 !important;
+}
+
+.header-breadcrumb ::ng-deep .custom-breadcrumb .p-breadcrumb-list {
+  gap: 0.5rem;
+}
+
+.header-breadcrumb ::ng-deep .custom-breadcrumb .p-breadcrumb-item {
+  color: rgba(255, 255, 255, 0.8);
+  font-size: 0.75rem;
+}
+
+.header-breadcrumb ::ng-deep .custom-breadcrumb .p-breadcrumb-item a {
+  color: rgba(255, 255, 255, 0.9);
+  text-decoration: none;
+  transition: color 0.2s ease;
+}
+
+.header-breadcrumb ::ng-deep .custom-breadcrumb .p-breadcrumb-item a:hover {
+  color: var(--p-highlight-background);
+}
+
+.header-breadcrumb ::ng-deep .custom-breadcrumb .p-breadcrumb-separator {
+  color: rgba(255, 255, 255, 0.5);
+  margin: 0 0.5rem;
+}
+
+/* Modo oscuro - Breadcrumb con texto oscuro */
+html.app-dark .header-breadcrumb ::ng-deep .custom-breadcrumb .p-breadcrumb-item {
+  color: rgba(0, 0, 0, 0.7) !important;
+}
+
+html.app-dark .header-breadcrumb ::ng-deep .custom-breadcrumb .p-breadcrumb-item a {
+  color: rgba(0, 0, 0, 0.8) !important;
+}
+
+html.app-dark .header-breadcrumb ::ng-deep .custom-breadcrumb .p-breadcrumb-item a:hover {
+  color: var(--p-highlight-background) !important;
+}
+
+html.app-dark .header-breadcrumb ::ng-deep .custom-breadcrumb .p-breadcrumb-separator {
+  color: rgba(0, 0, 0, 0.5) !important;
+}
+
+/* Modo oscuro - Botones del header con color oscuro */
+html.app-dark ::ng-deep .custom-toolbar .p-button {
+  color: #1c224d !important;
+}
+
+html.app-dark ::ng-deep .custom-toolbar .p-button:hover {
+  color: #4a7aff !important;
+  background-color: rgba(74, 122, 255, 0.1) !important;
+}
+
+html.app-dark ::ng-deep .custom-toolbar .p-button .pi {
+  color: #1c224d !important;
+}
+
+html.app-dark ::ng-deep .custom-toolbar .p-button span {
+  color: #1c224d !important;
+}
+
+html.app-dark ::ng-deep .custom-toolbar .p-avatar {
+  background-color: #4a7aff !important;
+  color: #ffffff !important;
+}
+
+/* Responsive */
+@media (max-width: 767.98px) {
+  ::ng-deep .custom-toolbar {
+    padding: 0.5rem 1rem !important;
+  }
+
+  .header-breadcrumb {
+    padding: 0.5rem 1rem;
+  }
+}
+

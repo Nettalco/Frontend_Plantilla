@@ -1,0 +1,48 @@
+/* =====================================================
+   BREADCRUMBS STYLES - NETTALCO DESIGN SYSTEM
+   ===================================================== */
+
+:host {
+  display: block;
+  padding: 0;
+  background: transparent;
+  border: none;
+}
+
+::ng-deep .custom-breadcrumb {
+  background: transparent !important;
+  border: none !important;
+  padding: 0 !important;
+}
+
+::ng-deep .custom-breadcrumb .p-breadcrumb-list {
+  gap: 0.5rem;
+}
+
+::ng-deep .custom-breadcrumb .p-breadcrumb-item {
+  color: var(--p-surface-600);
+  font-size: 0.875rem;
+}
+
+::ng-deep .custom-breadcrumb .p-breadcrumb-item a {
+  color: var(--p-primary-color);
+  text-decoration: none;
+  transition: color 0.2s ease;
+}
+
+::ng-deep .custom-breadcrumb .p-breadcrumb-item a:hover {
+  color: var(--p-highlight-background);
+}
+
+::ng-deep .custom-breadcrumb .p-breadcrumb-separator {
+  color: var(--p-surface-400);
+  margin: 0 0.5rem;
+}
+
+/* Responsive */
+@media (max-width: 767.98px) {
+  :host {
+    padding: 0.5rem 1rem;
+  }
+}
+
