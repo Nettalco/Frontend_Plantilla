@@ -128,20 +128,11 @@ export class MenuService implements OnDestroy {
    */
   getMenuItems(): Observable<MenuResponse> {
     const url = this.url + 'api/permisos/navegacion';
-    console.log('🔍 Obteniendo menú de navegación desde:', url);
-    
+
     return this.http.get<MenuResponse>(url, {
       withCredentials: true // Importante para enviar cookies en requests cross-origin
     }).pipe(
       catchError((error: any) => {
-        console.error('❌ Error al obtener menú de navegación:', error);
-        console.error('📊 Detalles del error:', {
-          status: error.status,
-          statusText: error.statusText,
-          message: error.message,
-          url: error.url,
-          error: error.error
-        });
         return this.handleTokenError(error);
       })
     );
@@ -266,28 +257,20 @@ export class MenuService implements OnDestroy {
   private handleTokenError = (error: any) => {
     // Manejar errores de token expirado
     if (error.status === 419 && error.error?.error === 'TOKEN_EXPIRED') {
-      console.warn('⚠️ Token expirado');
       return throwError(() => error);
     }
-    
+
     // Manejar errores 500 del servidor
     if (error.status === 500) {
-      console.error('❌ Error 500 del servidor al obtener menú de navegación');
       const errorMessage = error.error?.message || error.message || 'Error interno del servidor';
       this.messageService.error(errorMessage, 'Error al cargar el menú');
     }
-    
-    // Manejar errores de autenticación
-    if (error.status === 401 || error.status === 403) {
-      console.warn('⚠️ Error de autenticación/autorización');
-    }
-    
+
     return this.httpUtils.handleError(error);
   }
 
   private processMenuResponse = (response: MenuResponse): MenuItem[] => {
     if (!response.success) {
-      console.warn('Error del servidor:', response.message);
       throw new Error(response.message || 'Error al obtener menú');
     }
     return response.data.flatMap(sistema =>
@@ -386,22 +369,22 @@ export class MenuService implements OnDestroy {
     if (!codigo) {
       return MENU_ICON_CONFIG.default;
     }
-    
+
     // Normalizar el código: convertir a mayúsculas y eliminar espacios
     const codigoNormalizado = codigo.toUpperCase().trim();
-    
+
     // Buscar en secciones primero
     const iconoSeccion = MENU_ICON_CONFIG.secciones[codigoNormalizado];
     if (iconoSeccion) {
       return iconoSeccion;
     }
-    
+
     // Buscar en subsecciones
     const iconoSubseccion = MENU_ICON_CONFIG.subsecciones[codigoNormalizado];
     if (iconoSubseccion) {
       return iconoSubseccion;
     }
-    
+
     // Si no se encuentra, usar el default
     return MENU_ICON_CONFIG.default;
   };
