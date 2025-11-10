@@ -8,6 +8,7 @@ import { providePrimeNG } from 'primeng/config';
 import { NettalcoPreset } from './theme/nettalco-preset';
 import { MessageService } from 'primeng/api';
 import { ConfirmationService } from 'primeng/api';
+import { authInterceptor } from './core/interceptors/auth.interceptor';
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -15,7 +16,7 @@ export const appConfig: ApplicationConfig = {
     provideRouter(routes),
     provideHttpClient(
         withInterceptors([
-        // Add your interceptors here
+        authInterceptor
       ])
     ),
     provideAnimationsAsync(),
