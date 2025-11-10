@@ -3,7 +3,9 @@
    ===================================================== */
 
 /*
-   Bootstrap 5.3.8 is loaded via angular.json before this file
+   Bootstrap 5.3.8 is configured in angular.json
+   - CSS: node_modules/bootstrap/dist/css/bootstrap.min.css
+   - JS: node_modules/bootstrap/dist/js/bootstrap.bundle.min.js
    You can override Bootstrap styles here or in the modular CSS files
    Bootstrap utilities are also defined below to ensure they work correctly
 */

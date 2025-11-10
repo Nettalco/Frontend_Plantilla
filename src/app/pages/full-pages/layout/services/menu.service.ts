@@ -318,16 +318,62 @@ export class MenuService implements OnDestroy {
         }
       });
 
-      // Usar la ruta que viene del backend
-      if (subseccion.ruta) {
-        // Eliminar el slash inicial si existe y dividir en segmentos
-        const rutaLimpia = subseccion.ruta.startsWith('/') ? subseccion.ruta.substring(1) : subseccion.ruta;
-        menuItem.routerLink = rutaLimpia.split('/');
-      } else {
-        menuItem.routerLink = ['inicio'];
-      }
+      // Mapear rutas usando código de subsección o ruta del backend
+      menuItem.routerLink = this.mapSubseccionToRoute(seccion.codigo, subseccion.codigo, subseccion.ruta || undefined);
+
       return menuItem;
     });
+  }
+
+  /**
+   * Mapea los códigos de sección y subsección a las rutas correctas del frontend
+   */
+  private mapSubseccionToRoute(seccionCodigo: string, subseccionCodigo: string, rutaBackend?: string): string[] {
+    // Mapeo de códigos a rutas del frontend
+    const routeMap: { [key: string]: string[] } = {
+      // COTIZAR -> CONSULTA
+      'COTIZAR_CONSULTA': ['cotizaciones', 'mantenimiento-consulta'],
+      // COTIZAR -> DETALLE (no tiene ruta directa, redirigir a mantenimiento-consulta)
+      'COTIZAR_DETALLE': ['cotizaciones', 'mantenimiento-consulta'],
+      // Agregar más mapeos según sea necesario
+    };
+
+    const mapKey = `${seccionCodigo}_${subseccionCodigo}`;
+
+    // Priorizar mapeo por código
+    if (routeMap[mapKey]) {
+      return routeMap[mapKey];
+    }
+
+    // Si no hay mapeo específico, intentar usar la ruta del backend si existe y es válida
+    if (rutaBackend) {
+      const rutaLimpia = rutaBackend.startsWith('/') ? rutaBackend.substring(1) : rutaBackend;
+      let routeParts = rutaLimpia.split('/');
+
+      // Convertir guiones bajos a guiones en los segmentos de la ruta
+      routeParts = routeParts.map(part => part.replace(/_/g, '-'));
+
+      // Validar que la ruta sea válida
+      // Si es 'cotizar/detalle' sin ID, redirigir a mantenimiento-consulta
+      if (routeParts.length === 2 && routeParts[0] === 'cotizar' && routeParts[1] === 'detalle') {
+        return ['cotizaciones', 'mantenimiento-consulta'];
+      }
+
+      // Si es 'cotizar/mantenimiento-consulta' (ya convertido), cambiar a 'cotizaciones'
+      if (routeParts.length === 2 && routeParts[0] === 'cotizar' && routeParts[1] === 'mantenimiento-consulta') {
+        return ['cotizaciones', 'mantenimiento-consulta'];
+      }
+
+      // Si la ruta del backend es 'cotizar', cambiarla a 'cotizaciones'
+      if (routeParts[0] === 'cotizar') {
+        routeParts[0] = 'cotizaciones';
+      }
+
+      return routeParts;
+    }
+
+    // Por defecto, redirigir a inicio
+    return ['inicio'];
   }
 
   private createMenuItem(config: {
