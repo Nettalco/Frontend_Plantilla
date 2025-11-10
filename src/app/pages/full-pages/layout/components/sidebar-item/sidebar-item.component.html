@@ -21,12 +21,12 @@
   </ng-container>
 </a>
 
-<!-- Submenú que se muestra solo si el item está expandido -->
+<!-- Submenú que se muestra solo si el item está expandido y el sidebar NO está colapsado -->
 <ul
   [ngClass]="{ submenu: true, expanded: expanded }"
   class="submenu-container pb-1"
   [ngStyle]="{ '--depth': depth }"
-  *ngIf="item.items && expanded"
+  *ngIf="item.items && expanded && !sidebarCollapsed"
 >
   <li
     *ngFor="let subItem of item.items; let i = index; trackBy: trackBySubItem"
@@ -40,6 +40,7 @@
       [index]="i"
       [expanded]="currentExpandedItemIndex[depth + 1] === i"
       [currentExpandedItemIndex]="currentExpandedItemIndex"
+      [sidebarCollapsed]="sidebarCollapsed"
       (expandChange)="handleExpandChange($event)"
     >
     </app-sidebar-item>

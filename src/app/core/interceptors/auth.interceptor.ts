@@ -1,36 +1,42 @@
-import { Injectable } from '@angular/core';
-import { HttpInterceptor, HttpRequest, HttpHandler, HttpEvent, HttpErrorResponse } from '@angular/common/http';
-import { Observable, throwError } from 'rxjs';
-import { catchError } from 'rxjs/operators';
+import { HttpInterceptorFn, HttpErrorResponse } from '@angular/common/http';
+import { inject } from '@angular/core';
+import { catchError, throwError } from 'rxjs';
 import { AuthService } from '../services/auth.service';
 
-@Injectable()
-export class AuthInterceptor implements HttpInterceptor {
+/**
+ * Interceptor funcional para agregar el token de autorización a las peticiones HTTP
+ * Compatible con Angular standalone
+ */
+export const authInterceptor: HttpInterceptorFn = (req, next) => {
+  const authService = inject(AuthService);
 
-  constructor(private authService: AuthService) {}
+  // Obtener token desde cookies del navegador usando AuthService
+  const tokens = authService.obtenerTokensDesdeCookies();
+  
+  // También verificar si hay token en sessionStorage (fallback)
+  const sessionToken = authService.getAccessToken();
 
-  intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
-    // Obtener token desde cookies del navegador usando AuthService
-    const tokens = this.authService.obtenerTokensDesdeCookies();
+  // Priorizar token de cookies, si no existe usar el de sessionStorage
+  const accessToken = tokens.accessToken || sessionToken;
 
-    // Si hay token en cookies, agregarlo al header
-    if (tokens.accessToken) {
-      const cloned = req.clone({
-        setHeaders: {
-          Authorization: `Bearer ${tokens.accessToken}`
+  // Si hay token, agregarlo al header
+  if (accessToken) {
+    const cloned = req.clone({
+      setHeaders: {
+        Authorization: `Bearer ${accessToken}`
+      }
+    });
+    
+    return next(cloned).pipe(
+      catchError((error: HttpErrorResponse) => {
+        // Si el token ha expirado o hay error de autenticación, limpiar la sesión
+        if (error.status === 401 || error.status === 419) {
+          authService.removeAccessToken();
         }
-      });
-      return next.handle(cloned).pipe(
-        catchError((error: HttpErrorResponse) => {
-          // Si el token ha expirado, limpiar la sesión
-          if (error.status === 401 || error.status === 419) {
-            this.authService.removeAccessToken();
-          }
-          return throwError(() => error);
-        })
-      );
-    }
-
-    return next.handle(req);
+        return throwError(() => error);
+      })
+    );
   }
-}
+
+  return next(req);
+};

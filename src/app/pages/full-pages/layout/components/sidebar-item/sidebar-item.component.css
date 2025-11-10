@@ -7,13 +7,17 @@
   font-size: 15px;
   font-weight: 500;
   text-decoration: none !important;
-  transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+  transition: background-color 0.3s cubic-bezier(0.25, 0.8, 0.25, 1),
+              color 0.3s cubic-bezier(0.25, 0.8, 0.25, 1),
+              border-color 0.3s cubic-bezier(0.25, 0.8, 0.25, 1),
+              box-shadow 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
   padding: 5px 10px;
   margin: 2px 0;
   position: relative;
   color: rgba(255, 255, 255, 0.9);
   backdrop-filter: blur(5px);
   border: 1px solid transparent;
+  min-height: 36px; /* Altura mínima para mejor alineación */
 }
 
 .menu-link::before {
@@ -40,7 +44,7 @@
     rgba(74, 122, 255, 0.12)
   );
   color: var(--p-primary-inverse-color) !important;
-  transform: translateX(4px);
+  /* Removido transform: translateX para evitar movimiento del ícono */
   border-color: rgba(255, 255, 255, 0.15);
   box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
 }
@@ -65,25 +69,40 @@
   font-size: 18px;
   margin-right: 12px;
   width: 20px;
+  height: 20px;
   text-align: center;
   opacity: 0.9;
-  transition: all 0.3s ease;
-  display: inline-block;
+  transition: opacity 0.3s ease, color 0.3s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   font-family: 'primeicons' !important;
   flex-shrink: 0;
+  position: relative;
+  line-height: 1.5;
 }
 
 /* Asegurar que PrimeIcons se muestre correctamente */
 .menu-link i.pi {
   font-family: 'primeicons' !important;
-  speak: none;
+  /* speak: none; - Propiedad obsoleta, removida */
   font-style: normal;
   font-weight: normal;
   font-variant: normal;
   text-transform: none;
-  line-height: 1;
+  line-height: 1.5;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Asegurar alineación del texto con el ícono */
+.menu-text {
+  line-height: 1.5;
+  display: flex;
+  align-items: center;
 }
 
 /* Ocultar texto cuando el sidebar está colapsado */
@@ -105,9 +124,32 @@
   display: none !important;
 }
 
+/* Ocultar completamente los submenús cuando el sidebar está colapsado */
+:host-context(.sidebar-mini) .submenu-container,
+:host-context(.sidebar-mini) .submenu,
+:host-context(.sidebar-mini) .submenu-item {
+  display: none !important;
+  visibility: hidden !important;
+  opacity: 0 !important;
+  max-height: 0 !important;
+  overflow: hidden !important;
+  padding: 0 !important;
+  margin: 0 !important;
+}
+
+/* Asegurar que los subitems no se muestren cuando el sidebar está colapsado */
+:host-context(.sidebar-mini) ul.submenu {
+  display: none !important;
+}
+
+/* Ajustar el margen izquierdo de los subitems cuando el sidebar está colapsado */
+:host-context(.sidebar-mini) .submenu-item {
+  margin-left: 0 !important;
+}
+
 .menu-link:hover i {
   opacity: 1;
-  transform: scale(1.1);
+  /* Removido transform: scale para evitar movimiento del ícono */
 }
 
 /* Submenú con animaciones mejoradas */
@@ -197,7 +239,7 @@
 .submenu-link:hover {
   background: rgba(255, 255, 255, 0.08);
   color: rgba(255, 255, 255, 0.95);
-  transform: translateX(2px);
+  /* Removido transform: translateX para evitar movimiento del ícono */
 }
 
 .submenu-link:hover::before {
@@ -208,8 +250,13 @@
   font-size: 14px;
   margin-right: 8px;
   width: 16px;
+  height: 16px;
   text-align: center;
   opacity: 0.7;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  line-height: 1.5;
 }
 
 .submenu-link:hover i {
@@ -227,7 +274,7 @@
   font-weight: 600;
   border-left: 4px solid var(--color-mint-light);
   box-shadow: 0 4px 20px rgba(74, 122, 255, 0.25);
-  transform: translateX(4px);
+  /* Removido transform: translateX para evitar movimiento del ícono */
 }
 
 .menu-link.active::before {
@@ -241,7 +288,7 @@
 
 .menu-link.active i {
   color: var(--color-mint-light) !important;
-  transform: scale(1.15);
+  /* Removido transform: scale para evitar movimiento del ícono */
   text-shadow: 0 0 8px rgba(162, 240, 161, 0.4);
 }
 
