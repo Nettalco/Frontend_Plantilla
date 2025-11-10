@@ -1,0 +1,55 @@
+[
+  {
+    "element": ".container-search",
+    "popover": {
+      "title": "🔎 Buscador de cotización",
+      "description": "Puedes buscar una cotización por su ID, estado, cliente, estilo cliente, estilo Nettalco, versión Nettalco, temporada, ID Tela, descripción de Tela, prendas proyectadas, porcentaje gasto comisión, fecha de creación, fecha cálculo, costo ponderado, precio cotización, MARKUP"
+    }
+  },
+  {
+    "element": ".button-fiter",
+    "popover": {
+      "title": "🧪 Botón de filtros aplicados",
+      "description": "Puedes filtrar las cotizaciones por estado, cliente, estilo cliente, estilo Nettalco, versión Nettalco, temporada, ID Tela, descripción de Tela, prendas proyectadas, porcentaje gasto comisión, fecha de creación, fecha cálculo, costo ponderado, precio cotización, MARKUP.",
+      "side": "left",
+      "align": "start"
+    }
+  },
+  {
+    "element": ".button-clear",
+    "popover": {
+      "title": "🧹 Botón de limpiar filtros",
+      "description": "Puedes limpiar los filtros aplicados.",
+      "side": "left",
+      "align": "start"
+    }
+  },
+  {
+    "element": ".button-export",
+    "popover": {
+      "title": "📤 Botón de exportar datos",
+      "description": "Puedes exportar las cotizaciones a Excel.",
+      "side": "left",
+      "align": "start"
+    }
+  },
+  {
+    "element": ".button-info",
+    "popover": {
+      "title": "ℹ️ Botón de detalle",
+      "description": "Puedes ver la información de la cotización.",
+      "side": "left",
+      "align": "start"
+    }
+
+  },
+  {
+    "element": ".container-table",
+    "popover": {
+      "title": "📋 Tabla de cotizaciones",
+      "description": "Aquí puedes ver la lista de cotizaciones",
+      "side": "left",
+      "align": "start"
+    }
+  }
+]

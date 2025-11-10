@@ -1,0 +1,400 @@
+<!-- Contenido Principal (solo cuando los permisos están cargados) -->
+<div class="main-content-wrapper" *ngIf="canReadModulo('CONSULTA')">
+  <p-toolbar styleClass="custom-toolbar">
+    <ng-template #start>
+      <div class="d-flex gap-2">
+        <p-iconfield class="container-search" iconPosition="left">
+          <p-inputicon>
+            <i class="pi pi-search"></i>
+          </p-inputicon>
+          <input #searchInput pInputText type="text" (input)="applyGlobalFilter($event, dt1)"
+            placeholder="Buscar cotización..." />
+        </p-iconfield>
+        <p-button class="button-fiter" styleClass="btn-info btn-md"
+          [icon]="filtrosVisibles ? 'pi pi-filter-slash' : 'pi pi-filter'" (click)="toggleFiltros()" label="Filtros" />
+        <p-button class="button-clear" styleClass="btn-danger btn-v2 btn-md" icon="pi pi-times"
+          (click)="clear(dt1, searchInput)" label="Limpiar" />
+      </div>
+    </ng-template>
+
+    <ng-template #center>
+      <h4>Mantenimiento Y Consulta</h4>
+    </ng-template>
+
+    <ng-template #end>
+      <div class="d-flex gap-2">
+        <p-button icon="pi pi-question-circle" label="Guia de uso"   size="small" [outlined]="true"  styleClass="btn-primary btn-v2 btn-md"
+          pTooltip="Iniciar tour guiado" tooltipPosition="bottom" (onClick)="tourManteniminetoConsulta()">
+        </p-button>
+        <p-button icon="pi pi-file-export" label="Exportar" styleClass="btn-success btn-v2 btn-md"
+          pTooltip="Exportar datos a Excel" tooltipPosition="bottom" (onClick)="exportarExcel()">
+        </p-button>
+      </div>
+    </ng-template>
+  </p-toolbar>
+
+  <p-divider></p-divider>
+  <div class="container-table">
+    <p-table #dt1 [value]="cotizaciones" [scrollable]="true" styleClass="tabla-datos" [paginator]="true" [rows]="14"
+      [rowsPerPageOptions]="[10, 20, 30, 50]" [showCurrentPageReport]="true" [paginatorDropdownAppendTo]="'body'"
+      currentPageReportTemplate="Mostrando {first} a {last} de {totalRecords} registros"
+      [globalFilterFields]="['TCODICOTI', 'TESTACOTI', 'TABRVCLIE', 'TCODIESTICLIE', 'TCODIESTINETT', 'TCODITEMP', 'TDESCTELA']"
+      [dataKey]="'TCODICOTI'" responsiveLayout="scroll" showGridlines>
+
+      <ng-template pTemplate="header">
+        <tr class="text-center">
+          <th pSortableColumn="TCODICOTI">
+            <div class="d-flex gap-1 align-items-center justify-content-center">
+              Id. Cotización
+              <p-sortIcon field="TCODICOTI">
+                <ng-template pTemplate="default" let-sortOrder>
+                  <i *ngIf="sortOrder === 1" class="pi pi-sort-up" style="font-size: 1.2rem"></i>
+                  <i *ngIf="sortOrder === -1" class="pi pi-sort-down" style="font-size: 1.2rem"></i>
+                  <i *ngIf="sortOrder === 0 || sortOrder == null" class="pi pi-sort" style="font-size: 1.2rem"></i>
+                </ng-template>
+              </p-sortIcon>
+            </div>
+          </th>
+          <th pSortableColumn="TESTACOTI">
+            <div class="d-flex gap-1 align-items-center justify-content-center">
+              Estado Cotización
+              <p-sortIcon field="TESTACOTI">
+                <ng-template pTemplate="default" let-sortOrder>
+                  <i *ngIf="sortOrder === 1" class="pi pi-sort-up" style="font-size: 1.2rem"></i>
+                  <i *ngIf="sortOrder === -1" class="pi pi-sort-down" style="font-size: 1.2rem"></i>
+                  <i *ngIf="sortOrder === 0 || sortOrder == null" class="pi pi-sort" style="font-size: 1.2rem"></i>
+                </ng-template>
+              </p-sortIcon>
+            </div>
+          </th>
+          <th pSortableColumn="TABRVCLIE">
+            <div class="d-flex gap-1 align-items-center justify-content-center">
+              Cliente
+              <p-sortIcon field="TABRVCLIE">
+                <ng-template pTemplate="default" let-sortOrder>
+                  <i *ngIf="sortOrder === 1" class="pi pi-sort-up" style="font-size: 1.2rem"></i>
+                  <i *ngIf="sortOrder === -1" class="pi pi-sort-down" style="font-size: 1.2rem"></i>
+                  <i *ngIf="sortOrder === 0 || sortOrder == null" class="pi pi-sort" style="font-size: 1.2rem"></i>
+                </ng-template>
+              </p-sortIcon>
+            </div>
+          </th>
+          <th pSortableColumn="TCODIESTICLIE">
+            <div class="d-flex gap-1 align-items-center justify-content-center">
+              Estilo Cliente
+              <p-sortIcon field="TCODIESTICLIE">
+                <ng-template pTemplate="default" let-sortOrder>
+                  <i *ngIf="sortOrder === 1" class="pi pi-sort-up" style="font-size: 1.2rem"></i>
+                  <i *ngIf="sortOrder === -1" class="pi pi-sort-down" style="font-size: 1.2rem"></i>
+                  <i *ngIf="sortOrder === 0 || sortOrder == null" class="pi pi-sort" style="font-size: 1.2rem"></i>
+                </ng-template>
+              </p-sortIcon>
+            </div>
+          </th>
+          <th pSortableColumn="TNUMEVERSCLIE">
+            <div class="d-flex gap-1 align-items-center justify-content-center">
+              Versión Cliente
+              <p-sortIcon field="TNUMEVERSCLIE">
+                <ng-template pTemplate="default" let-sortOrder>
+                  <i *ngIf="sortOrder === 1" class="pi pi-sort-up" style="font-size: 1.2rem"></i>
+                  <i *ngIf="sortOrder === -1" class="pi pi-sort-down" style="font-size: 1.2rem"></i>
+                  <i *ngIf="sortOrder === 0 || sortOrder == null" class="pi pi-sort" style="font-size: 1.2rem"></i>
+                </ng-template>
+              </p-sortIcon>
+            </div>
+          </th>
+          <th pSortableColumn="TCODIESTINETT">
+            <div class="d-flex gap-1 align-items-center justify-content-center">
+              Estilo Nettalco
+              <p-sortIcon field="TCODIESTINETT">
+                <ng-template pTemplate="default" let-sortOrder>
+                  <i *ngIf="sortOrder === 1" class="pi pi-sort-up" style="font-size: 1.2rem"></i>
+                  <i *ngIf="sortOrder === -1" class="pi pi-sort-down" style="font-size: 1.2rem"></i>
+                  <i *ngIf="sortOrder === 0 || sortOrder == null" class="pi pi-sort" style="font-size: 1.2rem"></i>
+                </ng-template>
+              </p-sortIcon>
+            </div>
+          </th>
+          <th pSortableColumn="TNUMEVERSESTINETT">
+            <div class="d-flex gap-1 align-items-center justify-content-center">
+              Versión Nettalco
+              <p-sortIcon field="TNUMEVERSESTINETT">
+                <ng-template pTemplate="default" let-sortOrder>
+                  <i *ngIf="sortOrder === 1" class="pi pi-sort-up" style="font-size: 1.2rem"></i>
+                  <i *ngIf="sortOrder === -1" class="pi pi-sort-down" style="font-size: 1.2rem"></i>
+                  <i *ngIf="sortOrder === 0 || sortOrder == null" class="pi pi-sort" style="font-size: 1.2rem"></i>
+                </ng-template>
+              </p-sortIcon>
+            </div>
+          </th>
+          <th pSortableColumn="TCODITEMP">
+            <div class="d-flex gap-1 align-items-center justify-content-center">
+              Temporada
+              <p-sortIcon field="TCODITEMP">
+                <ng-template pTemplate="default" let-sortOrder>
+                  <i *ngIf="sortOrder === 1" class="pi pi-sort-up" style="font-size: 1.2rem"></i>
+                  <i *ngIf="sortOrder === -1" class="pi pi-sort-down" style="font-size: 1.2rem"></i>
+                  <i *ngIf="sortOrder === 0 || sortOrder == null" class="pi pi-sort" style="font-size: 1.2rem"></i>
+                </ng-template>
+              </p-sortIcon>
+            </div>
+          </th>
+          <th pSortableColumn="TCODITELA">
+            <div class="d-flex gap-1 align-items-center justify-content-center">
+              ID Tela
+              <p-sortIcon field="TCODITELA">
+                <ng-template pTemplate="default" let-sortOrder>
+                  <i *ngIf="sortOrder === 1" class="pi pi-sort-up" style="font-size: 1.2rem"></i>
+                  <i *ngIf="sortOrder === -1" class="pi pi-sort-down" style="font-size: 1.2rem"></i>
+                  <i *ngIf="sortOrder === 0 || sortOrder == null" class="pi pi-sort" style="font-size: 1.2rem"></i>
+                </ng-template>
+              </p-sortIcon>
+            </div>
+          </th>
+          <th pSortableColumn="TDESCTELA">
+            <div class="d-flex gap-1 align-items-center justify-content-center">
+              Descripción de Tela
+              <p-sortIcon field="TDESCTELA">
+                <ng-template pTemplate="default" let-sortOrder>
+                  <i *ngIf="sortOrder === 1" class="pi pi-sort-up" style="font-size: 1.2rem"></i>
+                  <i *ngIf="sortOrder === -1" class="pi pi-sort-down" style="font-size: 1.2rem"></i>
+                  <i *ngIf="sortOrder === 0 || sortOrder == null" class="pi pi-sort" style="font-size: 1.2rem"></i>
+                </ng-template>
+              </p-sortIcon>
+            </div>
+          </th>
+          <th pSortableColumn="TCANTPRENPROY">
+            <div class="d-flex gap-1 align-items-center justify-content-center">
+              Prendas Proyectadas
+              <p-sortIcon field="TCANTPRENPROY">
+                <ng-template pTemplate="default" let-sortOrder>
+                  <i *ngIf="sortOrder === 1" class="pi pi-sort-up" style="font-size: 1.2rem"></i>
+                  <i *ngIf="sortOrder === -1" class="pi pi-sort-down" style="font-size: 1.2rem"></i>
+                  <i *ngIf="sortOrder === 0 || sortOrder == null" class="pi pi-sort" style="font-size: 1.2rem"></i>
+                </ng-template>
+              </p-sortIcon>
+            </div>
+          </th>
+          <th pSortableColumn="TFECHCREA">
+            <div class="d-flex gap-1 align-items-center justify-content-center">
+              Fecha de Creación
+              <p-sortIcon field="TFECHCREA">
+                <ng-template pTemplate="default" let-sortOrder>
+                  <i *ngIf="sortOrder === 1" class="pi pi-sort-up" style="font-size: 1.2rem"></i>
+                  <i *ngIf="sortOrder === -1" class="pi pi-sort-down" style="font-size: 1.2rem"></i>
+                  <i *ngIf="sortOrder === 0 || sortOrder == null" class="pi pi-sort" style="font-size: 1.2rem"></i>
+                </ng-template>
+              </p-sortIcon>
+            </div>
+          </th>
+          <th pSortableColumn="TFECHCALC">
+            <div class="d-flex gap-1 align-items-center justify-content-center">
+              Fecha Calculo
+              <p-sortIcon field="TFECHCALC">
+                <ng-template pTemplate="default" let-sortOrder>
+                  <i *ngIf="sortOrder === 1" class="pi pi-sort-up" style="font-size: 1.2rem"></i>
+                  <i *ngIf="sortOrder === -1" class="pi pi-sort-down" style="font-size: 1.2rem"></i>
+                  <i *ngIf="sortOrder === 0 || sortOrder == null" class="pi pi-sort" style="font-size: 1.2rem"></i>
+                </ng-template>
+              </p-sortIcon>
+            </div>
+          </th>
+          <th pSortableColumn="TCOSTPOND">
+            <div class="d-flex gap-1 align-items-center justify-content-center">
+              ($) Costo Ponderado
+              <p-sortIcon field="TCOSTPOND">
+                <ng-template pTemplate="default" let-sortOrder>
+                  <i *ngIf="sortOrder === 1" class="pi pi-sort-up" style="font-size: 1.2rem"></i>
+                  <i *ngIf="sortOrder === -1" class="pi pi-sort-down" style="font-size: 1.2rem"></i>
+                  <i *ngIf="sortOrder === 0 || sortOrder == null" class="pi pi-sort" style="font-size: 1.2rem"></i>
+                </ng-template>
+              </p-sortIcon>
+            </div>
+          </th>
+          <th pSortableColumn="TPRECCOTI">
+            <div class="d-flex gap-1 align-items-center justify-content-center">
+              ($) Precio Cotización
+              <p-sortIcon field="TPRECCOTI">
+                <ng-template pTemplate="default" let-sortOrder>
+                  <i *ngIf="sortOrder === 1" class="pi pi-sort-up" style="font-size: 1.2rem"></i>
+                  <i *ngIf="sortOrder === -1" class="pi pi-sort-down" style="font-size: 1.2rem"></i>
+                  <i *ngIf="sortOrder === 0 || sortOrder == null" class="pi pi-sort" style="font-size: 1.2rem"></i>
+                </ng-template>
+              </p-sortIcon>
+            </div>
+          </th>
+          <th pSortableColumn="TMKUPOBJE">
+            <div class="d-flex gap-1 align-items-center justify-content-center">
+              MARKUP
+              <p-sortIcon field="TMKUPOBJE">
+                <ng-template pTemplate="default" let-sortOrder>
+                  <i *ngIf="sortOrder === 1" class="pi pi-sort-up" style="font-size: 1.2rem"></i>
+                  <i *ngIf="sortOrder === -1" class="pi pi-sort-down" style="font-size: 1.2rem"></i>
+                  <i *ngIf="sortOrder === 0 || sortOrder == null" class="pi pi-sort" style="font-size: 1.2rem"></i>
+                </ng-template>
+              </p-sortIcon>
+            </div>
+          </th>
+        </tr>
+        <tr class="filtro" [ngClass]="{'d-none': !filtrosVisibles}">
+          <th>
+            <div class="w-100 p-1">
+              <input type="text" pInputText pSize="small" class="w-100 filtro-columna-input"
+                style="padding: 3px; font-size: 10pt !important; text-align:center;" [(ngModel)]="filtroTCODICOTI"
+                (input)="dt1.filter($any($event.target).value, 'TCODICOTI', 'contains')"
+                placeholder="Filtrar Id. Cotización" />
+            </div>
+          </th>
+          <th>
+            <div class="w-100 p-1">
+              <input type="text" pInputText pSize="small" class="w-100 filtro-columna-input"
+                style="padding: 3px; font-size: 10pt !important; text-align:center;" [(ngModel)]="filtroTESTACOTI"
+                (input)="dt1.filter($any($event.target).value, 'TESTACOTI', 'contains')"
+                placeholder="Filtrar Estado Cotización" />
+            </div>
+          </th>
+          <th>
+            <div class="w-100 p-1">
+              <input type="text" pInputText pSize="small" class="w-100 filtro-columna-input"
+                style="padding: 3px; font-size: 10pt !important; text-align:center;" [(ngModel)]="filtroTABRVCLIE"
+                (input)="dt1.filter($any($event.target).value, 'TABRVCLIE', 'contains')"
+                placeholder="Filtrar Cliente" />
+            </div>
+          </th>
+          <th>
+            <div class="w-100 p-1">
+              <input type="text" pInputText pSize="small" class="w-100 filtro-columna-input"
+                style="padding: 3px; font-size: 10pt !important; text-align:center;" [(ngModel)]="filtroTCODIESTICLIE"
+                (input)="dt1.filter($any($event.target).value, 'TCODIESTICLIE', 'contains')"
+                placeholder="Filtrar Estilo Cliente" />
+            </div>
+          </th>
+          <th>
+            <div class="w-100 p-1">
+              <input type="text" pInputText pSize="small" class="w-100 filtro-columna-input"
+                style="padding: 3px; font-size: 10pt !important; text-align:center;" [(ngModel)]="filtroTNUMEVERSCLIE"
+                (input)="dt1.filter($any($event.target).value, 'TNUMEVERSCLIE', 'contains')"
+                placeholder="Filtrar Versión Cliente" />
+            </div>
+          </th>
+          <th>
+            <div class="w-100 p-1">
+              <input type="text" pInputText pSize="small" class="w-100 filtro-columna-input"
+                style="padding: 3px; font-size: 10pt !important; text-align:center;" [(ngModel)]="filtroTCODIESTINETT"
+                (input)="dt1.filter($any($event.target).value, 'TCODIESTINETT', 'contains')"
+                placeholder="Filtrar Estilo Nettalco" />
+            </div>
+          </th>
+          <th>
+            <div class="w-100 p-1">
+              <input type="text" pInputText pSize="small" class="w-100 filtro-columna-input"
+                style="padding: 3px; font-size: 10pt !important; text-align:center;"
+                [(ngModel)]="filtroTNUMEVERSESTINETT"
+                (input)="dt1.filter($any($event.target).value, 'TNUMEVERSESTINETT', 'contains')"
+                placeholder="Filtrar Versión Nettalco" />
+            </div>
+          </th>
+          <th>
+            <div class="w-100 p-1">
+              <input type="text" pInputText pSize="small" class="w-100 filtro-columna-input"
+                style="padding: 3px; font-size: 10pt !important; text-align:center;" [(ngModel)]="filtroTCODITEMP"
+                (input)="dt1.filter($any($event.target).value, 'TCODITEMP', 'contains')"
+                placeholder="Filtrar Temporada" />
+            </div>
+          </th>
+          <th>
+            <div class="w-100 p-1">
+              <input type="text" pInputText pSize="small" class="w-100 filtro-columna-input"
+                style="padding: 3px; font-size: 10pt !important; text-align:center;" [(ngModel)]="filtroTCODITELA"
+                (input)="dt1.filter($any($event.target).value, 'TCODITELA', 'contains')"
+                placeholder="Filtrar ID Tela" />
+            </div>
+          </th>
+          <th>
+            <div class="w-100 p-1">
+              <input type="text" pInputText pSize="small" class="w-100 filtro-columna-input"
+                style="padding: 3px; font-size: 10pt !important; text-align:center;" [(ngModel)]="filtroTDESCTELA"
+                (input)="dt1.filter($any($event.target).value, 'TDESCTELA', 'contains')"
+                placeholder="Filtrar Descripción de Tela" />
+            </div>
+          </th>
+          <th>
+            <div class="w-100 p-1">
+              <input type="text" pInputText pSize="small" class="w-100 filtro-columna-input"
+                style="padding: 3px; font-size: 10pt !important; text-align:center;" [(ngModel)]="filtroTCANTPRENPROY"
+                (input)="dt1.filter($any($event.target).value, 'TCANTPRENPROY', 'contains')"
+                placeholder="Filtrar Prendas Proyectadas" />
+            </div>
+          </th>
+          <th>
+            <div class="w-100 p-1">
+              <input type="text" pInputText pSize="small" class="w-100 filtro-columna-input"
+                style="padding: 3px; font-size: 10pt !important; text-align:center;" [(ngModel)]="filtroTFECHCREA"
+                (input)="dt1.filter($any($event.target).value, 'TFECHCREA', 'contains')"
+                placeholder="Filtrar Fecha de Creación" />
+            </div>
+          </th>
+          <th>
+            <div class="w-100 p-1">
+              <input type="text" pInputText pSize="small" class="w-100 filtro-columna-input"
+                style="padding: 3px; font-size: 10pt !important; text-align:center;" [(ngModel)]="filtroTFECHCALC"
+                (input)="dt1.filter($any($event.target).value, 'TFECHCALC', 'contains')"
+                placeholder="Filtrar Fecha Cálculo" />
+            </div>
+          </th>
+          <th>
+            <div class="w-100 p-1">
+              <input type="text" pInputText pSize="small" class="w-100 filtro-columna-input"
+                style="padding: 3px; font-size: 10pt !important; text-align:center;" [(ngModel)]="filtroTCOSTPOND"
+                (input)="dt1.filter($any($event.target).value, 'TCOSTPOND', 'contains')"
+                placeholder="Filtrar Costo Ponderado" />
+            </div>
+          </th>
+          <th>
+            <div class="w-100 p-1">
+              <input type="text" pInputText pSize="small" class="w-100 filtro-columna-input"
+                style="padding: 3px; font-size: 10pt !important; text-align:center;" [(ngModel)]="filtroTPRECCOTI"
+                (input)="dt1.filter($any($event.target).value, 'TPRECCOTI', 'contains')"
+                placeholder="Filtrar Precio Cotización" />
+            </div>
+          </th>
+          <th>
+            <div class="w-100 p-1">
+              <input type="text" pInputText pSize="small" class="w-100 filtro-columna-input"
+                style="padding: 3px; font-size: 10pt !important; text-align:center;" [(ngModel)]="filtroTMKUPOBJE"
+                (input)="dt1.filter($any($event.target).value, 'TMKUPOBJE', 'contains')" placeholder="Filtrar MARKUP" />
+            </div>
+          </th>
+        </tr>
+      </ng-template>
+
+
+
+      <ng-template pTemplate="body" let-row>
+        <tr [pSelectableRow]="row">
+          <td class="button-info cell-center">
+            <p-button variant="text" severity="secondary" label="{{ row.TCODICOTI }}"
+              (click)="$event.stopPropagation(); mostrarInfoId(row.TCODICOTI)" [pTooltip]="'VER DETALLE'">
+            </p-button>
+          </td>
+          <td class="cell-estado-cotizacion" [pTooltip]="row.TESTACOTI">{{ row.TESTACOTI }}</td>
+          <td class="cell-center">{{ row.TABRVCLIE }}</td>
+          <td class="cell-center">{{ row.TCODIESTICLIE }}</td>
+          <td class="cell-center">{{ row.TNUMEVERSCLIE }}</td>
+          <td class="cell-center">{{ row.TCODIESTINETT }}</td>
+          <td class="cell-center">{{ row.TNUMEVERSESTINETT }}</td>
+          <td class="cell-center">{{ row.TCODITEMP }}</td>
+          <td class="cell-center">{{ row.TCODITELA }}</td>
+          <td class="cell-description" [pTooltip]="row.TDESCTELA">{{ row.TDESCTELA }}</td>
+          <td class="cell-right">{{ row.TCANTPRENPROY | number }}</td>
+          <td class="cell-center">{{ row.TFECHCREA | date:'dd/MM/yyyy' }}</td>
+          <td class="cell-center">{{ row.TFECHCALC | date:'dd/MM/yyyy' }}</td>
+          <td class="cell-right">{{ row.TCOSTPOND | currency:'USD':'symbol':'1.3-3' }}</td>
+          <td class="cell-right">{{ row.TPRECCOTI | currency:'USD':'symbol':'1.3-3' }}</td>
+          <td class="cell-right">{{ row.TMKUPOBJE | number:'1.3-3' }}</td>
+        </tr>
+      </ng-template>
+    </p-table>
+  </div>
+
+  <p-toast></p-toast>

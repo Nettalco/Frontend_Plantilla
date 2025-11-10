@@ -40,7 +40,7 @@
   overflow-y: auto;
   overflow-x: hidden;
   background: var(--p-surface-0);
-  padding: 1.5rem;
+  padding: 0.5rem;
   min-height: calc(100vh - 120px);
 }
 
