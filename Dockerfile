@@ -15,8 +15,9 @@ RUN npm ci --legacy-peer-deps
 # Copiar código fuente
 COPY . .
 
-# Construir aplicación Angular para producción
-RUN npm run build -- --configuration production
+# Construir aplicación Angular para producción con baseHref correcto
+# Como Strip Path está activado en el proxy, el baseHref debe ser /
+RUN npm run build -- --configuration production --base-href /
 
 # ================================
 # Stage 2: Production
