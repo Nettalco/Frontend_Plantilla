@@ -39,6 +39,12 @@
             "production": {
               "baseHref": "/cotizaciones/",
               "deployUrl": "/cotizaciones/",
+              "fileReplacements": [
+                {
+                  "replace": "src/environment/global.ts",
+                  "with": "src/environment/global.production.ts"
+                }
+              ],
               "budgets": [
                 {
                   "type": "initial",
@@ -56,10 +62,16 @@
             "development": {
               "optimization": false,
               "extractLicenses": false,
-              "sourceMap": true
+              "sourceMap": true,
+              "fileReplacements": [
+                {
+                  "replace": "src/environment/global.ts",
+                  "with": "src/environment/global.development.ts"
+                }
+              ]
             }
           },
-          "defaultConfiguration": "production"
+          "defaultConfiguration": "development"
         },
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
