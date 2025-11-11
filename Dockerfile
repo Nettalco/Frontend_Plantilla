@@ -22,21 +22,17 @@ RUN npm run build -- --configuration production
 # ================================
 # Stage 2: Production
 # ================================
-FROM node:20-alpine
-
-# Establecer directorio de trabajo
-WORKDIR /app
-
-# Instalar serve globalmente
-RUN npm install -g serve
+FROM nginx:alpine
 
 # Copiar archivos compilados desde stage de build
-COPY --from=build /app/dist/front-plantilla/browser ./dist
+COPY --from=build /app/dist/front-plantilla/browser /usr/share/nginx/html
 
-# Exponer puerto 3001
-EXPOSE 3001
+# Copiar configuración personalizada de nginx
+COPY nginx.conf /etc/nginx/conf.d/default.conf
 
-# Comando para iniciar el servidor
-# serve sirve los archivos estáticos y maneja el routing de SPA
-CMD ["serve", "-s", "dist", "-l", "3001"]
+# Exponer puerto 80
+EXPOSE 80
+
+# Comando para iniciar nginx
+CMD ["nginx", "-g", "daemon off;"]
 
