@@ -6,11 +6,12 @@ export const routes: Routes = [
   {
     path: '',
     component: LayoutMainComponent,
-    resolve: { layout: layoutResolver },
+    // Comentado temporalmente para desarrollo local sin backend
+    // resolve: { layout: layoutResolver },
     children: [
       {
         path: '',
-        redirectTo: 'inicio',
+        redirectTo: 'estilos',
         pathMatch: 'full'
       },
       {
@@ -29,6 +30,6 @@ export const routes: Routes = [
   },
   {
     path: '**',
-    redirectTo: 'inicio'
+    redirectTo: ''
   }
 ];
