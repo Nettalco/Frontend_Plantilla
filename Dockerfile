@@ -15,17 +15,16 @@ RUN npm ci --legacy-peer-deps
 # Copiar código fuente
 COPY . .
 
-# Construir aplicación Angular para producción
-# Usa el baseHref del angular.json (/cotizaciones/)
-RUN npm run build -- --configuration production
+# Construir aplicación Angular para producción con rutas para /prueba/
+RUN npm run build -- --configuration production --base-href /prueba/
 
 # ================================
 # Stage 2: Production
 # ================================
 FROM nginx:alpine
 
-# Copiar archivos compilados desde stage de build
-COPY --from=build /app/dist/front-plantilla/browser /usr/share/nginx/html
+# Copiar archivos del build al subdirectorio /prueba/
+COPY --from=build /app/dist/front-plantilla/browser /usr/share/nginx/html/prueba
 
 # Copiar configuración personalizada de nginx
 COPY nginx.conf /etc/nginx/conf.d/default.conf
