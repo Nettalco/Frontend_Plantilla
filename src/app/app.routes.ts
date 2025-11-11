@@ -6,8 +6,7 @@ export const routes: Routes = [
   {
     path: '',
     component: LayoutMainComponent,
-    // Comentado temporalmente para desarrollo local sin backend
-    // resolve: { layout: layoutResolver },
+    resolve: { layout: layoutResolver },
     children: [
       {
         path: '',
