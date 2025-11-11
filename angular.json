@@ -37,7 +37,7 @@
           },
           "configurations": {
             "production": {
-              "baseHref": "/cotizaciones/",
+              "baseHref": "/cotizaciones",
               "budgets": [
                 {
                   "type": "initial",

@@ -15,8 +15,8 @@ RUN npm ci --legacy-peer-deps
 # Copiar código fuente
 COPY . .
 
-# Construir aplicación Angular para producción con rutas para /cotizaciones/
-RUN npm run build -- --configuration production --base-href /cotizaciones/
+# Construir aplicación Angular para producción con rutas para /cotizaciones
+RUN npm run build -- --configuration production
 
 # ================================
 # Stage 2: Production
