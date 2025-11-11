@@ -15,7 +15,7 @@ RUN npm ci --legacy-peer-deps
 # Copiar código fuente
 COPY . .
 
-# Construir aplicación Angular para producción con rutas para /cotizaciones
+# Construir aplicación Angular para producción con rutas para /cotizaciones/
 RUN npm run build -- --configuration production
 
 # ================================
@@ -23,7 +23,7 @@ RUN npm run build -- --configuration production
 # ================================
 FROM nginx:alpine
 
-# Copiar archivos del build al subdirectorio /cotizaciones/
+# Copiar archivos del build al subdirectorio cotizaciones
 COPY --from=build /app/dist/front-plantilla/browser /usr/share/nginx/html/cotizaciones
 
 # Copiar configuración personalizada de nginx
