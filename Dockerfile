@@ -29,8 +29,8 @@ COPY --from=build /app/dist/front-plantilla/browser /usr/share/nginx/html
 # Copiar configuración personalizada de nginx para SPA
 COPY nginx.conf /etc/nginx/conf.d/default.conf
 
-# Exponer el puerto 80
-EXPOSE 80
+# Exponer el puerto 8080
+EXPOSE 8080
 
 # Comando por defecto de nginx (ya está en la imagen base)
 CMD ["nginx", "-g", "daemon off;"]
