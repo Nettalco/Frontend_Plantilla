@@ -60,6 +60,8 @@
               "outputHashing": "all"
             },
             "development": {
+              "baseHref": "/cotizacionesDESA/",
+              "deployUrl": "/cotizacionesDESA/",
               "optimization": false,
               "extractLicenses": false,
               "sourceMap": true,
