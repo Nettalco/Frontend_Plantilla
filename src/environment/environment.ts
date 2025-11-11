@@ -4,7 +4,7 @@ export const environment = {
   // enableDevTools: true, // Herramientas de desarrollo
   // showDebugInfo: true, // Información de debug en consola
   // defaultTheme: 'light', // Tema por defecto
-  // cacheEnabled: true // Cache habilitado
+
 
   // Para producción, cambiar a:
   production: true,
