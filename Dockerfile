@@ -1,37 +1,41 @@
-# =====================================================
-# STAGE 1: Build - Construir la aplicación Angular
-# =====================================================
+# ================================
+# Stage 1: Build
+# ================================
 FROM node:20-alpine AS build
 
 # Establecer directorio de trabajo
 WORKDIR /app
 
 # Copiar archivos de dependencias
-COPY package.json package-lock.json* ./
+COPY package*.json ./
 
 # Instalar dependencias
 RUN npm ci --legacy-peer-deps
 
-# Copiar el resto de los archivos del proyecto
+# Copiar código fuente
 COPY . .
 
-# Construir la aplicación para producción
+# Construir aplicación Angular para producción
 RUN npm run build -- --configuration production
 
-# =====================================================
-# STAGE 2: Production - Servir con nginx
-# =====================================================
-FROM nginx:alpine
+# ================================
+# Stage 2: Production
+# ================================
+FROM node:20-alpine
 
-# Copiar los archivos construidos desde la etapa de build
-COPY --from=build /app/dist/front-plantilla/browser /usr/share/nginx/html
+# Establecer directorio de trabajo
+WORKDIR /app
 
-# Copiar configuración personalizada de nginx para SPA
-COPY nginx.conf /etc/nginx/conf.d/default.conf
+# Instalar serve globalmente
+RUN npm install -g serve
 
-# Exponer el puerto 3001
+# Copiar archivos compilados desde stage de build
+COPY --from=build /app/dist/front-plantilla/browser ./dist
+
+# Exponer puerto 3001
 EXPOSE 3001
 
-# Comando por defecto de nginx (ya está en la imagen base)
-CMD ["nginx", "-g", "daemon off;"]
+# Comando para iniciar el servidor
+# serve sirve los archivos estáticos y maneja el routing de SPA
+CMD ["serve", "-s", "dist", "-l", "3001"]
 
