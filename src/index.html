@@ -6,8 +6,63 @@
   <base href="/">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="icon" type="image/x-icon" href="favicon.ico">
+  <link href="https://cdn.jsdelivr.net/npm/@n8n/chat/dist/style.css" rel="stylesheet" />
+  <style>
+    :root {
+      --chat--color--primary: #1c224d;
+      --chat--color--primary-shade-50: #161b3f;
+      --chat--color--primary--shade-100: #111530;
+      --chat--color--secondary: #4a7aff;
+      --chat--color-secondary-shade-50: #2954ff;
+      --chat--color-white: #ffffff;
+      --chat--color-light: #f7fafc;
+      --chat--color-light-shade-50: #edf2f7;
+      --chat--color-light-shade-100: #e6e6e6;
+      --chat--color-medium: #cbd5e0;
+      --chat--color-dark: #1c224d;
+      --chat--toggle--background: #4a7aff;
+      --chat--toggle--hover--background: #6b8fff;
+      --chat--toggle--active--background: #2954ff;
+      --chat--header--background: #1c224d;
+      --chat--header--color: #ffffff;
+      --chat--subtitle--color: #ffffff;
+      --chat--heading--font-size: 1.5em;
+    }
+
+    /* Forzar color blanco en el encabezado del chat */
+    #n8n-chat .chat-header,
+    #n8n-chat .chat-header *,
+    #n8n-chat .chat-heading,
+    #n8n-chat .chat-subtitle {
+      color: #ffffff !important;
+    }
+  </style>
 </head>
 <body>
   <app-root></app-root>
+  <script type="module">
+    import { createChat } from 'https://cdn.jsdelivr.net/npm/@n8n/chat/dist/chat.bundle.es.js';
+
+    createChat({
+      webhookUrl: 'https://socap.nettalco.com.pe/n8n/webhook/06611cf0-d7df-4b64-84ca-ed067c86c098/chat',
+      mode: 'window',
+      defaultLanguage: 'es',
+      showWelcomeScreen: true,
+      initialMessages: [
+        'Hola! 👋',
+        'Soy el Asistente de Nettalco.',
+        '¿En qué puedo ayudarte hoy?'
+      ],
+      i18n: {
+        es: {
+          title: 'Asistente Nettalco 👋',
+          subtitle: 'Estamos aquí para ayudarte. Haz tu consulta.',
+          footer: '',
+          getStarted: 'Nueva Conversación',
+          inputPlaceholder: 'Escribe tu pregunta...'
+        }
+      }
+    });
+  </script>
 </body>
 </html>
